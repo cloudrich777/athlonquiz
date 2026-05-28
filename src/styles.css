@@ -1,0 +1,650 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system definition.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.129 0.042 264.695);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.129 0.042 264.695);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.129 0.042 264.695);
+  --primary: oklch(0.208 0.042 265.755);
+  --primary-foreground: oklch(0.984 0.003 247.858);
+  --secondary: oklch(0.968 0.007 247.896);
+  --secondary-foreground: oklch(0.208 0.042 265.755);
+  --muted: oklch(0.968 0.007 247.896);
+  --muted-foreground: oklch(0.554 0.046 257.417);
+  --accent: oklch(0.968 0.007 247.896);
+  --accent-foreground: oklch(0.208 0.042 265.755);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: oklch(0.929 0.013 255.508);
+  --input: oklch(0.929 0.013 255.508);
+  --ring: oklch(0.704 0.04 256.788);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.984 0.003 247.858);
+  --sidebar-foreground: oklch(0.129 0.042 264.695);
+  --sidebar-primary: oklch(0.208 0.042 265.755);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.968 0.007 247.896);
+  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
+  --sidebar-border: oklch(0.929 0.013 255.508);
+  --sidebar-ring: oklch(0.704 0.04 256.788);
+}
+
+.dark {
+  --background: oklch(0.129 0.042 264.695);
+  --foreground: oklch(0.984 0.003 247.858);
+  --card: oklch(0.208 0.042 265.755);
+  --card-foreground: oklch(0.984 0.003 247.858);
+  --popover: oklch(0.208 0.042 265.755);
+  --popover-foreground: oklch(0.984 0.003 247.858);
+  --primary: oklch(0.929 0.013 255.508);
+  --primary-foreground: oklch(0.208 0.042 265.755);
+  --secondary: oklch(0.279 0.041 260.031);
+  --secondary-foreground: oklch(0.984 0.003 247.858);
+  --muted: oklch(0.279 0.041 260.031);
+  --muted-foreground: oklch(0.704 0.04 256.788);
+  --accent: oklch(0.279 0.041 260.031);
+  --accent-foreground: oklch(0.984 0.003 247.858);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.551 0.027 264.364);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.208 0.042 265.755);
+  --sidebar-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.279 0.041 260.031);
+  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────
+   ATHLON RACING — Desafio 5 Anos
+   ───────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@400;700;900&display=swap');
+
+.athlon-root {
+  --a-blue: #0057ff;
+  --a-blue-d: #003ec2;
+  --a-blue-dd: #002280;
+  --a-blue-g: rgba(0, 87, 255, 0.5);
+  --a-gold: #ffd100;
+  --a-bg: #07080f;
+  --a-card: #0e0f1c;
+  --a-card2: #13141f;
+  --a-card3: #1a1b2e;
+  --a-border: rgba(0, 87, 255, 0.2);
+  --a-border2: rgba(0, 87, 255, 0.5);
+  --a-white: #f0f4ff;
+  --a-gray: #7a8ab0;
+  font-family: 'Rajdhani', 'Barlow', sans-serif;
+  background: var(--a-bg);
+  color: var(--a-white);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+.athlon-root * { box-sizing: border-box; }
+.athlon-root .bg-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.athlon-root .wrap { position: relative; z-index: 2; }
+
+/* Header */
+.athlon-root .hdr {
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  padding: 12px 20px; background: rgba(7,8,15,.95); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--a-border2); position: sticky; top: 0; z-index: 50;
+  box-shadow: 0 0 30px rgba(0,87,255,.15);
+}
+.athlon-root .hdr-logo-img { height: 30px; width: auto; display: block; filter: drop-shadow(0 0 14px rgba(0,120,255,.55)); }
+.athlon-root .hd { width: 1px; height: 22px; background: var(--a-border2); }
+.athlon-root .htag { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--a-blue); display: inline-flex; align-items: center; gap: 6px; }
+
+/* Animations */
+@keyframes a-fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes a-slideR { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes a-float { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-14px) rotate(2deg); } }
+@keyframes a-shadowPulse { 0%,100% { transform: translateX(-50%) scaleX(1); opacity: .55; } 50% { transform: translateX(-50%) scaleX(.75); opacity: .3; } }
+@keyframes a-glow { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+@keyframes a-pulseBtn { 0%,100% { box-shadow: 0 4px 28px var(--a-blue-g); } 50% { box-shadow: 0 4px 48px rgba(0,87,255,.8), 0 0 0 8px rgba(0,87,255,.1); } }
+@keyframes a-pulseGold { 0%,100% { box-shadow: 0 4px 28px rgba(255,209,0,.5); } 50% { box-shadow: 0 4px 48px rgba(255,209,0,.8), 0 0 0 8px rgba(255,209,0,.1); } }
+@keyframes a-spin { to { transform: rotate(360deg); } }
+@keyframes a-ringRotate { to { transform: rotate(360deg); } }
+@keyframes a-spinRingPulse { 0%,100% { opacity: .3; transform: scale(1); } 50% { opacity: .8; transform: scale(1.04); } }
+@keyframes a-pointerPulse { 0%,100% { filter: drop-shadow(0 3px 12px rgba(255,80,80,.6)); } 50% { filter: drop-shadow(0 3px 20px rgba(255,80,80,1)); } }
+
+/* ── INTRO ── */
+.athlon-root .screen-intro { max-width: 720px; margin: 0 auto; padding: 36px 20px 72px; text-align: center; }
+.athlon-root .intro-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px;
+  letter-spacing: 5px; text-transform: uppercase; color: var(--a-blue); margin-bottom: 18px;
+  display: inline-flex; align-items: center; gap: 8px; padding: 5px 16px;
+  border: 1px solid var(--a-border2); border-radius: 100px; background: rgba(0,87,255,.08);
+  animation: a-fadeUp .4s .1s both;
+}
+.athlon-root .intro-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: clamp(46px, 11vw, 86px);
+  line-height: .9; letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 22px; animation: a-fadeUp .5s .2s both;
+}
+.athlon-root .intro-title .t-blue { color: var(--a-blue); text-shadow: 0 0 50px var(--a-blue-g); }
+.athlon-root .intro-title .t-small { font-size: .45em; letter-spacing: 3px; display: block; color: var(--a-gray); }
+
+/* Moto stage — floating photo */
+.athlon-root .moto-stage {
+  position: relative; width: 100%; max-width: 460px; height: 320px;
+  margin: 0 auto 32px; display: flex; align-items: center; justify-content: center;
+  animation: a-fadeUp .6s .3s both;
+}
+.athlon-root .moto-glow {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 55%, rgba(0,90,255,.35) 0%, rgba(0,60,200,.15) 35%, transparent 65%);
+  filter: blur(20px); animation: a-glow 3s ease-in-out infinite;
+  pointer-events: none;
+}
+.athlon-root .moto-img {
+  position: relative; z-index: 2;
+  max-width: 100%; max-height: 320px; width: auto; height: auto;
+  object-fit: contain;
+  animation: a-float 5.5s ease-in-out infinite;
+  filter:
+    drop-shadow(0 18px 35px rgba(0,0,0,.65))
+    drop-shadow(0 0 40px rgba(0,90,255,.45));
+}
+.athlon-root .moto-shadow {
+  position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+  width: 70%; height: 22px;
+  background: radial-gradient(ellipse, rgba(0,80,220,.55) 0%, transparent 70%);
+  border-radius: 50%; filter: blur(12px);
+  animation: a-shadowPulse 5.5s ease-in-out infinite;
+}
+
+.athlon-root .intro-text-block {
+  background: var(--a-card); border: 1px solid var(--a-border); border-radius: 12px;
+  padding: 24px 26px; margin-bottom: 28px; text-align: left;
+  animation: a-fadeUp .5s .45s both;
+}
+.athlon-root .intro-text-block p { font-size: 16px; line-height: 1.75; color: #9aadcc; font-weight: 500; }
+.athlon-root .intro-text-block strong { color: var(--a-white); }
+.athlon-root .hl {
+  background: rgba(0,87,255,.25); color: var(--a-white);
+  border-bottom: 2px solid var(--a-blue); padding: 1px 3px; border-radius: 2px;
+  font-style: italic; font-weight: 700;
+}
+
+/* Buttons */
+.athlon-root .btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 19px;
+  letter-spacing: 3px; text-transform: uppercase; padding: 16px 52px; border-radius: 6px;
+  border: none; cursor: pointer; text-decoration: none; transition: all .18s;
+  position: relative; overflow: hidden;
+}
+.athlon-root .btn:disabled { opacity: .6; cursor: not-allowed; }
+.athlon-root .btn-blue { background: var(--a-blue); color: #fff; animation: a-pulseBtn 2.2s ease-in-out infinite; }
+.athlon-root .btn-blue:hover:not(:disabled) { background: #1a6aff; transform: translateY(-2px); }
+.athlon-root .btn-gold { background: var(--a-gold); color: #000; animation: a-pulseGold 2.2s ease-in-out infinite; }
+.athlon-root .btn-gold:hover:not(:disabled) { background: #ffe033; transform: translateY(-2px); }
+
+/* ── QUIZ ── */
+.athlon-root .screen-quiz { max-width: 680px; margin: 0 auto; padding: 28px 20px 80px; }
+.athlon-root .prog-wrap { margin-bottom: 28px; }
+.athlon-root .prog-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 9px; }
+.athlon-root .prog-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--a-gray); }
+.athlon-root .prog-pct { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--a-blue); }
+.athlon-root .prog-track { height: 5px; background: var(--a-card2); border-radius: 3px; overflow: hidden; }
+.athlon-root .prog-fill {
+  height: 100%; background: linear-gradient(90deg, var(--a-blue-dd), var(--a-blue), #00aaff);
+  border-radius: 3px; transition: width .6s cubic-bezier(.4,0,.2,1); box-shadow: 0 0 14px var(--a-blue-g);
+}
+.athlon-root .q-badge {
+  display: inline-block; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px;
+  letter-spacing: 4px; text-transform: uppercase; color: var(--a-blue); margin-bottom: 12px;
+  background: rgba(0,87,255,.1); border: 1px solid var(--a-border); padding: 4px 12px; border-radius: 4px;
+}
+.athlon-root .q-card {
+  background: var(--a-card); border: 1px solid var(--a-border); border-radius: 12px;
+  padding: 28px 22px 22px; box-shadow: 0 8px 40px rgba(0,0,0,.5);
+}
+.athlon-root .q-slide-in { animation: a-slideR .35s cubic-bezier(.22,1,.36,1) both; }
+.athlon-root .q-text {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 900;
+  font-size: clamp(20px, 4.5vw, 27px); line-height: 1.2; text-transform: uppercase;
+  margin-bottom: 22px; color: var(--a-white);
+}
+.athlon-root .opts { display: flex; flex-direction: column; gap: 9px; }
+.athlon-root .opt {
+  background: var(--a-card2); border: 1.5px solid var(--a-border); border-radius: 8px;
+  padding: 14px 16px; display: flex; align-items: center; gap: 13px; cursor: pointer;
+  font-size: 16px; font-weight: 600; color: #9aadcc; transition: all .18s;
+  text-align: left; width: 100%; font-family: inherit;
+  position: relative; overflow: hidden;
+}
+.athlon-root .opt::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--a-blue); transform: scaleY(0); transition: transform .18s;
+}
+.athlon-root .opt:hover:not(:disabled) {
+  border-color: var(--a-border2); background: var(--a-card3); color: var(--a-white);
+  transform: translateX(4px);
+}
+.athlon-root .opt:hover:not(:disabled)::before { transform: scaleY(1); }
+.athlon-root .opt-selected {
+  border-color: var(--a-blue) !important;
+  background: linear-gradient(135deg, rgba(0,87,255,.35), rgba(0,170,255,.2)) !important;
+  color: #fff !important;
+  box-shadow: 0 0 0 1px var(--a-blue), 0 0 28px rgba(0,140,255,.55), inset 0 0 30px rgba(0,150,255,.18);
+  transform: translateX(4px);
+}
+.athlon-root .opt-selected::before { transform: scaleY(1); }
+.athlon-root .opt-dim { opacity: .45; }
+.athlon-root .opt-letter {
+  font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: var(--a-blue);
+  min-width: 22px; text-align: center; flex-shrink: 0;
+  background: rgba(0,87,255,.15); border-radius: 4px; padding: 2px 5px;
+  transition: all .18s;
+}
+.athlon-root .opt-selected .opt-letter { background: var(--a-blue); color: #fff; box-shadow: 0 0 12px rgba(0,150,255,.7); }
+
+/* ── ANALYZE ── */
+.athlon-root .screen-analyze { max-width: 480px; margin: 0 auto; padding: 110px 24px; text-align: center; }
+.athlon-root .loader-ring {
+  width: 60px; height: 60px; margin: 0 auto 26px;
+  border: 4px solid var(--a-card2); border-top-color: var(--a-blue);
+  border-radius: 50%; animation: a-spin .75s linear infinite;
+  box-shadow: 0 0 24px var(--a-blue-g);
+}
+.athlon-root .analyze-p { font-size: 17px; font-weight: 600; color: var(--a-gray); line-height: 1.7; }
+.athlon-root .analyze-p strong { color: var(--a-white); }
+
+/* ── ROULETTE ── */
+.athlon-root .screen-roulette { max-width: 700px; margin: 0 auto; padding: 40px 20px 80px; text-align: center; }
+.athlon-root .roulette-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: clamp(38px, 9vw, 70px);
+  letter-spacing: 2px; margin-bottom: 5px; line-height: 1;
+}
+.athlon-root .roulette-title span { color: var(--a-blue); text-shadow: 0 0 40px var(--a-blue-g); }
+.athlon-root .roulette-sub {
+  color: var(--a-gray); font-size: 14px; font-weight: 600; margin-bottom: 28px;
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.athlon-root .wheel-scene { position: relative; display: inline-block; margin-bottom: 32px; }
+.athlon-root .wheel-outer-ring {
+  position: absolute; inset: -14px; border-radius: 50%;
+  background: conic-gradient(from 0deg, #0057ff, #003ab5, #ffd100, #003ab5, #0057ff, #003ab5, #ffd100, #003ab5, #0057ff);
+  animation: a-ringRotate 12s linear infinite; opacity: .35; pointer-events: none;
+}
+.athlon-root .wheel-outer-ring2 {
+  position: absolute; inset: -8px; border-radius: 50%;
+  background: radial-gradient(circle, transparent 75%, rgba(0,87,255,.4) 85%, transparent 100%);
+  pointer-events: none;
+}
+.athlon-root .wheel-pointer {
+  position: absolute; top: -26px; left: 50%; transform: translateX(-50%); z-index: 20;
+  animation: a-pointerPulse 2s ease-in-out infinite;
+}
+.athlon-root #wheel-canvas {
+  display: block; border-radius: 50%; position: relative; z-index: 2;
+  box-shadow: 0 0 0 4px #0d0d1a, 0 0 0 7px rgba(0,87,255,.6), 0 0 60px rgba(0,87,255,.4);
+}
+
+.athlon-root .sc-box {
+  background: linear-gradient(135deg, rgba(255,209,0,.06) 0%, rgba(0,87,255,.08) 100%);
+  border: 1px solid rgba(255,209,0,.3); border-radius: 16px;
+  padding: 24px 28px; max-width: 420px; margin: 0 auto 24px;
+  animation: a-fadeUp .4s cubic-bezier(.22,1,.36,1) both;
+}
+.athlon-root .sc-box p { font-size: 15px; font-weight: 600; color: var(--a-gray); margin-bottom: 16px; line-height: 1.6; }
+.athlon-root .sc-box strong { color: var(--a-white); }
+.athlon-root .sc-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px; color: var(--a-gold); margin-bottom: 8px; }
+
+.athlon-root .spin-btn-wrap { position: relative; display: inline-block; }
+.athlon-root .spin-pulse-ring {
+  position: absolute; inset: -6px; border-radius: 6px;
+  border: 2px solid var(--a-gold);
+  animation: a-spinRingPulse 1.8s ease-in-out infinite; pointer-events: none;
+}
+
+/* ── WIN ── */
+.athlon-root .screen-win { max-width: 620px; margin: 0 auto; padding: 48px 20px 80px; text-align: center; }
+.athlon-root .win-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px;
+  letter-spacing: 6px; text-transform: uppercase; color: var(--a-blue); margin-bottom: 18px;
+}
+.athlon-root .win-card {
+  background: linear-gradient(135deg, var(--a-blue-dd) 0%, var(--a-blue) 60%, #1a7aff 100%);
+  border-radius: 14px; padding: 40px 28px; margin-bottom: 18px;
+  position: relative; overflow: hidden; box-shadow: 0 14px 60px rgba(0,87,255,.5);
+}
+.athlon-root .win-card::after {
+  content: ''; position: absolute; top: -70px; right: -70px; width: 240px; height: 240px;
+  border-radius: 50%; background: rgba(255,255,255,.05);
+}
+.athlon-root .win-lbl { font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: rgba(255,255,255,.55); margin-bottom: 5px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; }
+.athlon-root .win-big {
+  font-family: 'Bebas Neue', sans-serif; font-size: clamp(72px, 18vw, 120px);
+  line-height: .85; color: #fff; text-shadow: 0 5px 24px rgba(0,0,0,.3);
+  position: relative; z-index: 1;
+}
+.athlon-root .win-big sub { font-size: .35em; letter-spacing: 5px; vertical-align: middle; margin-left: 6px; }
+.athlon-root .win-desc { font-size: 15px; font-weight: 600; color: rgba(255,255,255,.7); margin-top: 8px; position: relative; z-index: 1; }
+.athlon-root .coupon-wrap { background: var(--a-card); border-radius: 10px; overflow: hidden; margin-bottom: 16px; box-shadow: 0 4px 24px rgba(0,0,0,.4); }
+.athlon-root .coupon-top { padding: 10px 20px; background: rgba(0,87,255,.15); border-bottom: 1px solid var(--a-border); }
+.athlon-root .coupon-lbl { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--a-gray); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; }
+.athlon-root .coupon-bottom { padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.athlon-root .coupon-code { font-family: 'Bebas Neue', sans-serif; font-size: 40px; letter-spacing: 7px; color: var(--a-gold); }
+.athlon-root .coupon-copy {
+  background: var(--a-blue); color: #fff; border: none; cursor: pointer;
+  padding: 9px 16px; border-radius: 5px; font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; font-family: 'Barlow Condensed', sans-serif;
+  transition: all .18s; white-space: nowrap;
+}
+.athlon-root .coupon-copy:hover { background: #1a6aff; transform: scale(1.04); }
+.athlon-root .coupon-copy.copied { background: #00e676; color: #000; }
+.athlon-root .timer-wrap {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  background: var(--a-card2); border: 1px solid var(--a-border); border-radius: 9px;
+  padding: 12px 20px; margin-bottom: 22px;
+}
+.athlon-root .timer-lbl { font-size: 12px; font-weight: 700; color: var(--a-gray); text-transform: uppercase; letter-spacing: 2px; font-family: 'Barlow Condensed', sans-serif; }
+.athlon-root .timer-val { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--a-blue); min-width: 66px; text-align: center; }
+.athlon-root .urgency { font-size: 13px; font-weight: 500; color: var(--a-gray); line-height: 1.7; margin-top: 14px; }
+.athlon-root .urgency strong { color: var(--a-gold); }
+
+
+@media (max-width: 480px) {
+  .athlon-root #wheel-canvas { width: 300px !important; height: 300px !important; }
+  .athlon-root .btn { font-size: 16px; padding: 14px 28px; }
+  .athlon-root .moto-stage { height: 240px; }
+  .athlon-root .moto-img { max-height: 240px; }
+}
+
+
+/* === Typography refresh (Orbitron + Rajdhani) === */
+.athlon-root .intro-eyebrow,
+.athlon-root .prog-label,
+.athlon-root .prog-pct,
+.athlon-root .q-badge,
+.athlon-root .roulette-sub,
+.athlon-root .win-eyebrow,
+.athlon-root .timer-lbl,
+.athlon-root .coupon-lbl,
+.athlon-root .win-lbl,
+.athlon-root .coupon-copy,
+.athlon-root .htag { font-family: 'Orbitron', sans-serif !important; }
+.athlon-root .intro-title,
+.athlon-root .q-text,
+.athlon-root .roulette-title,
+.athlon-root .sc-title { font-family: 'Orbitron', 'Bebas Neue', sans-serif !important; font-weight: 900 !important; letter-spacing: 1px; }
+.athlon-root .win-big,
+.athlon-root .coupon-code,
+.athlon-root .timer-val,
+.athlon-root .prog-pct { font-family: 'Orbitron', sans-serif !important; font-weight: 900 !important; letter-spacing: 2px; }
+.athlon-root .btn { font-family: 'Orbitron', sans-serif !important; font-weight: 800 !important; letter-spacing: 2.5px; font-size: 17px; }
+.athlon-root .opt, .athlon-root .opt span { font-family: 'Rajdhani', sans-serif; font-weight: 600; }
+.athlon-root .opt-letter { font-family: 'Orbitron', sans-serif !important; font-weight: 800; font-size: 13px; }
+.athlon-root .intro-text-block p { font-family: 'Rajdhani', sans-serif; font-size: 17px; font-weight: 500; }
+
+/* Intro headline punch */
+.athlon-root .intro-title .t-blue { background: linear-gradient(180deg, #4ea4ff 0%, #0057ff 60%, #0030a0 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 60px rgba(0,120,255,.5); }
+.athlon-root .arrow { display: inline-block; transition: transform .2s; }
+.athlon-root .btn-blue:hover .arrow { transform: translateX(6px); }
+
+/* === Gamified click feedback (mini confetti burst) === */
+.athlon-root .confetti-burst { position: fixed; left: var(--cx, 50%); top: var(--cy, 50%); width: 0; height: 0; pointer-events: none; z-index: 999; }
+.athlon-root .confetti-burst i {
+  position: absolute; left: 0; top: 0; width: 9px; height: 14px; border-radius: 2px;
+  --tx: 0px; --ty: 0px; --rot: 0deg; --c: #0057ff;
+  background: var(--c); transform-origin: center;
+  animation: a-burst .9s cubic-bezier(.2,.7,.3,1) forwards;
+}
+@keyframes a-burst {
+  0%   { opacity: 1; transform: translate(-50%,-50%) rotate(0); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) rotate(var(--rot)); }
+}
+.athlon-root .opt-correct {
+  border-color: #00e676 !important;
+  background: linear-gradient(135deg, rgba(0,230,118,.25), rgba(0,180,90,.12)) !important;
+  color: #fff !important;
+  box-shadow: 0 0 0 1px #00e676, 0 0 28px rgba(0,230,118,.55);
+  animation: a-popcorrect .35s ease;
+}
+@keyframes a-popcorrect { 0% { transform: scale(.97); } 50% { transform: scale(1.025); } 100% { transform: scale(1); } }
+.athlon-root .opt-correct .opt-letter { background: #00e676; color: #002a10; box-shadow: 0 0 14px rgba(0,230,118,.7); }
+.athlon-root .feedback-pop {
+  position: fixed; left: 50%; top: 50%; transform: translate(-50%,-50%);
+  pointer-events: none; z-index: 998;
+  font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 28px; letter-spacing: 3px;
+  color: #00e676; text-shadow: 0 0 24px rgba(0,230,118,.8), 0 4px 18px rgba(0,0,0,.6);
+  animation: a-pop 1s ease forwards;
+}
+@keyframes a-pop {
+  0%   { opacity: 0; transform: translate(-50%,-30%) scale(.6); }
+  20%  { opacity: 1; transform: translate(-50%,-50%) scale(1.1); }
+  70%  { opacity: 1; transform: translate(-50%,-55%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%,-80%) scale(.95); }
+}
+
+/* === Analyze (speed-line) loader styled like reference === */
+.athlon-root .speed-loader { position: relative; height: 80px; max-width: 380px; margin: 0 auto 26px; overflow: hidden; border-radius: 6px; }
+.athlon-root .speed-loader i {
+  position: absolute; height: 2px; left: -40%;
+  background: linear-gradient(90deg, transparent, var(--a-blue), transparent);
+  animation: a-speedmove 1.4s linear infinite;
+}
+@keyframes a-speedmove { 0% { transform: translateX(0); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateX(360%); opacity: 0; } }
+
+/* === Roulette tweaks to match reference logistic === */
+.athlon-root .wheel-outer-ring {
+  background: conic-gradient(from 0deg, #0057ff 0deg, #0030a0 30deg, #ffd100 60deg, #0030a0 90deg, #0057ff 120deg, #0030a0 150deg, #ffd100 180deg, #0030a0 210deg, #0057ff 240deg, #0030a0 270deg, #ffd100 300deg, #0030a0 330deg, #0057ff 360deg);
+  opacity: .45;
+}
+
+/* === PRO REFRESH — Athlon brand-aligned polish === */
+
+/* Spin button (brand blue, metallic) */
+.athlon-root .btn-spin {
+  background: linear-gradient(180deg, #2d8aff 0%, #0057ff 45%, #002a8a 100%);
+  color: #fff;
+  border: 1px solid rgba(140,190,255,.45);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.35) inset,
+    0 -2px 0 rgba(0,0,0,.35) inset,
+    0 10px 28px rgba(0,87,255,.45),
+    0 0 0 0 rgba(0,140,255,.0);
+  text-shadow: 0 1px 0 rgba(0,0,0,.4);
+  animation: a-pulseBtn 2.4s ease-in-out infinite;
+  padding: 18px 56px;
+}
+.athlon-root .btn-spin:hover:not(:disabled) {
+  background: linear-gradient(180deg, #4a9bff 0%, #0e66ff 45%, #003bb0 100%);
+  transform: translateY(-2px);
+}
+.athlon-root .btn-spin:active:not(:disabled) { transform: translateY(0); }
+
+/* Pulse ring matches blue button */
+.athlon-root .spin-pulse-ring {
+  border-color: rgba(31,123,255,.7) !important;
+  box-shadow: 0 0 24px rgba(0,87,255,.35);
+}
+
+/* Wheel scene background halo (subtle, premium) */
+.athlon-root .wheel-scene::before {
+  content: ''; position: absolute; inset: -60px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,87,255,.28) 0%, transparent 65%);
+  filter: blur(20px); z-index: 0; pointer-events: none;
+}
+
+/* Header polish */
+.athlon-root .hdr {
+  padding: 14px 24px;
+  background: linear-gradient(180deg, rgba(7,8,15,.96) 0%, rgba(7,8,15,.82) 100%);
+  border-bottom: 1px solid rgba(31,123,255,.35);
+}
+.athlon-root .hdr-logo-img { height: 34px; }
+
+/* Intro eyebrow chip — quieter, more premium */
+.athlon-root .intro-eyebrow {
+  background: linear-gradient(180deg, rgba(31,123,255,.18), rgba(31,123,255,.06));
+  border-color: rgba(31,123,255,.45);
+  color: #9cc5ff; padding: 7px 18px; font-size: 10px; letter-spacing: 4px;
+  box-shadow: 0 0 24px rgba(31,123,255,.18);
+}
+
+/* Headlines: tighter, more brand */
+.athlon-root .intro-title { letter-spacing: 0; font-weight: 900; }
+.athlon-root .intro-title .t-small {
+  color: #6e85bd; font-weight: 600; font-family: 'Orbitron', sans-serif;
+  font-size: .28em; letter-spacing: 6px; margin-bottom: 10px;
+}
+
+/* Card surfaces: faint inner glow + sharper border */
+.athlon-root .intro-text-block,
+.athlon-root .q-card,
+.athlon-root .sc-box,
+.athlon-root .coupon-wrap,
+.athlon-root .timer-wrap {
+  background: linear-gradient(180deg, rgba(14,15,28,.92), rgba(10,12,22,.92));
+  border: 1px solid rgba(31,123,255,.18);
+  box-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 12px 40px rgba(0,0,0,.5);
+}
+
+/* Question card: add accent bar + stat row vibe */
+.athlon-root .q-card { position: relative; }
+.athlon-root .q-card::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: linear-gradient(180deg, #2d8aff, #0030a0);
+  border-radius: 12px 0 0 12px;
+}
+
+/* Option hover: subtle right-side chevron */
+.athlon-root .opt { padding: 16px 18px; border-radius: 10px; }
+.athlon-root .opt::after {
+  content: '›'; position: absolute; right: 16px; top: 50%; transform: translateY(-50%) translateX(-6px);
+  color: rgba(31,123,255,.0); font-size: 22px; font-weight: 800; transition: all .2s;
+}
+.athlon-root .opt:hover:not(:disabled)::after { color: rgba(31,123,255,.9); transform: translateY(-50%) translateX(0); }
+
+/* Win card: deeper brand gradient + subtle racing-line shimmer */
+.athlon-root .win-card {
+  background:
+    linear-gradient(135deg, #002a8a 0%, #0057ff 55%, #1a7aff 100%),
+    radial-gradient(circle at 100% 0%, rgba(255,255,255,.18), transparent 40%);
+  background-blend-mode: screen;
+  border: 1px solid rgba(140,190,255,.35);
+  box-shadow: 0 20px 60px rgba(0,87,255,.45), 0 1px 0 rgba(255,255,255,.18) inset;
+}
+
+/* Coupon code: brand blue instead of gold */
+.athlon-root .coupon-code { color: #2d8aff; }
+.athlon-root .timer-val { color: #2d8aff; }
+.athlon-root .urgency strong { color: #2d8aff; }
+
+/* Pointer: thinner, sharper, brand-aligned */
+.athlon-root .wheel-pointer svg { filter: drop-shadow(0 4px 10px rgba(0,0,0,.6)); }
+
+/* Wheel ring: tighter, less cartoon */
+.athlon-root .wheel-outer-ring {
+  background: conic-gradient(from 0deg, #1f7bff, #002a8a, #1f7bff, #002a8a, #1f7bff, #002a8a, #1f7bff, #002a8a);
+  opacity: .32;
+}
+.athlon-root #wheel-canvas {
+  box-shadow: 0 0 0 4px #07080f, 0 0 0 6px rgba(31,123,255,.35), 0 0 80px rgba(0,87,255,.35);
+}
+
+/* Disable big gold-only emphasis everywhere */
+.athlon-root .sc-title { color: #2d8aff; }
+
+/* Subtle scanline overlay on intro card for "real" feel (non-cartoony) */
+.athlon-root .intro-text-block {
+  position: relative;
+}
+.athlon-root .intro-text-block::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: 12px;
+  background: repeating-linear-gradient(180deg, rgba(255,255,255,.018) 0 1px, transparent 1px 3px);
+  mix-blend-mode: overlay;
+}
