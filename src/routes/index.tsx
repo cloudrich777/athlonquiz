@@ -2,6 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState, useCallback } from "react";
 import athlonMoto from "@/assets/athlon-moto.png";
 import athlonLogo from "@/assets/athlon-logo.webp";
+import soundEscape from "@/assets/escape.mp3";
+import soundWin from "@/assets/win.mp3";
+import soundRoleta from "@/assets/roleta.mp3";
+import soundLose from "@/assets/lose.mp3";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -39,6 +43,12 @@ const PRIZES: Prize[] = [
   { label: "FRETE\nGRÁTIS", code: "FRETEAT", pct: "FRETE", desc: "Frete Grátis em qualquer produto", url: "https://athlonracing.com.br", c1: "#1f7bff", c2: "#002a8a", txt: "#ffffff" },
 ];
 
+const playAudio = (src: string, loop = false): HTMLAudioElement => {
+  const audio = new Audio(src);
+  audio.loop = loop;
+  audio.play().catch(() => {});
+  return audio;
+};
 function Index() {
   const [screen, setScreen] = useState<Screen>("intro");
   const [curQ, setCurQ] = useState(0);
@@ -53,6 +63,7 @@ function Index() {
   const bgRef = useRef<HTMLCanvasElement | null>(null);
   const wheelRef = useRef<HTMLCanvasElement | null>(null);
   const wheelAngleRef = useRef(0);
+  const roletaAudioRef = useRef<HTMLAudioElement | null>(null);
 
   // ── Background speed-lines canvas (same vibe as original) ──
   useEffect(() => {
@@ -157,7 +168,7 @@ function Index() {
       ctx.save();
       const textR = R * 0.66;
       ctx.translate(cx + Math.cos(am) * textR, cy + Math.sin(am) * textR);
-      ctx.rotate(am + Math.PI / 2);
+      ctx.rotate(am);
       const isBig = p.pct === "90%";
       const fs = isBig ? 20 : 13;
       const lh = isBig ? 22 : 15;
@@ -229,8 +240,10 @@ function Index() {
 
   // ── Quiz handlers ──
   const startQuiz = () => {
+    playAudio(soundEscape);
     setCurQ(0); setSelected(null); setScreen("quiz");
   };
+  
 
   // mini confetti burst at click point
   const fireConfetti = (x: number, y: number) => {
@@ -263,6 +276,7 @@ function Index() {
   const handleSelect = (i: number, ev?: React.MouseEvent) => {
     if (selected !== null) return;
     setSelected(i);
+    playAudio(soundWin);
     if (ev) fireConfetti(ev.clientX, ev.clientY);
     setTimeout(() => {
       if (curQ + 1 >= QUESTIONS.length) {
@@ -279,39 +293,51 @@ function Index() {
   const spinWheel = (isSecond: boolean) => {
     if (spinning) return;
     setSpinning(true);
+    roletaAudioRef.current = playAudio(soundRoleta, true);
     if (isSecond) setShowSecondChance(false);
+  
     const slice = (2 * Math.PI) / PRIZES.length;
-    // idx 1 = TENTE NOVAMENTE (first spin), idx 0 = 90% OFF (second spin)
-    const idx = isSecond ? 0 : 1;
-    const turns = isSecond ? 11 + Math.random() * 2 : 9 + Math.random() * 3;
-    const target = turns * 2 * Math.PI + (Math.PI / 2) - (idx + 0.5) * slice;
-    const dur = isSecond ? 8500 : 6000;
+    const idx = isSecond ? 0 : 1; // 0 = 90% OFF, 1 = TENTE NOVAMENTE
+    const turns = isSecond ? 11 : 9;
+  
+    const currentAngle = ((wheelAngleRef.current % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+    
+    const targetAngle = -(idx * slice + slice / 2);
+    const normalizedTarget = ((targetAngle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+    
+    let delta = normalizedTarget - currentAngle;
+    if (delta > 0) delta -= 2 * Math.PI;
+    
+    const target = delta - turns * 2 * Math.PI;
+    const jitter = (Math.random() - 0.5) * slice * 0.4;
+    const finalTarget = target + jitter;
+  
+    const dur = isSecond ? 8000 : 6000;
     const a0 = wheelAngleRef.current;
     const t0 = performance.now();
-
-    const easeNormal = (t: number) => 1 - Math.pow(1 - t, 3.5);
-    // Near-miss: nearly stops at idx 1 (TENTE NOVAMENTE, sits right BEFORE 90% OFF in spin direction),
-    // then creeps one more slice into 90% OFF.
-    const easeNearMiss = (t: number) => {
-      if (t <= 0.7) return (1 - Math.pow(1 - t / 0.7, 3)) * 0.88;
-      if (t <= 0.86) { const s = (t - 0.7) / 0.16; return 0.88 + (1 - 0.88) * (s * 0.085); }
-      if (t <= 0.93) { const s = (t - 0.86) / 0.07; const base = 0.88 + (1 - 0.88) * 0.085; return base + (1 - base) * (s * 0.02); }
-      const base2 = 0.88 + (1 - 0.88) * (0.085 + (1 - 0.085) * 0.02);
-      const s3 = (t - 0.93) / 0.07;
-      return base2 + (1 - base2) * (1 - Math.pow(1 - s3, 2.5));
-    };
-    const easeF = isSecond ? easeNearMiss : easeNormal;
-
+  
+    const easeOut = (t: number) => 1 - Math.pow(1 - t, 3.5);
+  
     const frame = (now: number) => {
       const t = Math.min((now - t0) / dur, 1);
-      wheelAngleRef.current = a0 + target * easeF(t);
+      wheelAngleRef.current = a0 + finalTarget * easeOut(t);
       drawWheel(wheelAngleRef.current, motoImgRef.current ?? undefined);
       if (t < 1) { requestAnimationFrame(frame); return; }
       setSpinning(false);
       const landed = PRIZES[idx];
       setTimeout(() => {
-        if (!landed.code) { setSecondUsed(true); setShowSecondChance(true); }
-        else { setPrize(landed); setScreen("win"); }
+        if (roletaAudioRef.current) {
+          roletaAudioRef.current.pause();
+          roletaAudioRef.current.currentTime = 0;
+          roletaAudioRef.current = null;
+        }
+        if (!landed.code) { 
+          playAudio(soundLose);
+          setSecondUsed(true); setShowSecondChance(true); 
+        } else { 
+          playAudio(soundWin);
+          setPrize(landed); setScreen("win"); 
+        }
       }, 400);
     };
     requestAnimationFrame(frame);
@@ -494,7 +520,7 @@ function Index() {
             </div>
             <a className="btn btn-blue" href={prize.url ?? "#"} target="_blank" rel="noreferrer">🔥 &nbsp;USAR MEU DESCONTO AGORA</a>
             <p className="urgency"><strong>⚠️ Apenas para os próximos compradores.</strong><br />Cupom válido enquanto durar o estoque.</p>
-            <button className="btn btn-blue" style={{ marginTop: 22 }} onClick={() => { setScreen("intro"); setSecondUsed(false); setShowSecondChance(false); setPrize(null); }}>JOGAR NOVAMENTE <span className="arrow">➜</span></button>
+            
           </section>
         )}
       </div>
